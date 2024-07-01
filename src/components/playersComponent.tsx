@@ -38,6 +38,7 @@ export const PlayersComponent = () => {
       goals,
       attendingMatches,
       id: uuidv4(),
+      teamId: "",
     };
     const list = playerList.concat([newPlayer]);
     setPlayerList(list);

@@ -4,6 +4,7 @@ export type Player = {
   goals: number;
   attendingMatches: number;
   id: string;
+  teamId: string;
 };
 
 export type Team = {

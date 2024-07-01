@@ -1,26 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import "./teamComponent.scss";
 import { Player, Team } from "./teamHelper";
-
-const positionList = [
-  "CDM",
-  "GK",
-  "CF",
-  "RB",
-  "LB",
-  "LWB",
-  "RWB",
-  "DM",
-  "CM",
-  "RM",
-  "LM",
-  "AM",
-  "SS",
-  "LW",
-  "RW",
-];
+import { addTeam, fetchTeams } from "../api";
 
 export const TeamComponent = () => {
   const [name, setName] = useState("");
@@ -42,7 +25,12 @@ export const TeamComponent = () => {
     setTeam(newTeam);
     setName("");
     setMatches(0);
+    addTeam(newTeam);
   };
+
+  useEffect(() => {
+    fetchTeams();
+  }, []);
 
   return (
     <div className="teamPageContainer">
