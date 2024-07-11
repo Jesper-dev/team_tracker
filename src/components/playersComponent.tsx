@@ -2,7 +2,9 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import "./playersComponent.scss";
-import { Player } from "./teamHelper";
+import { Player, Team } from "./teamHelper";
+import { updateTeamWithPlayers } from "../api/dbApi";
+import { useGetUser } from "../hooks/useGetUser";
 
 const positionList = [
   "CDM",
@@ -27,8 +29,10 @@ export const PlayersComponent = () => {
   const [position, setPosition] = useState(positionList[0]);
   const [goals, setGoals] = useState(0);
   const [attendingMatches, setAttendingMatches] = useState(0);
-
   const [playerList, setPlayerList] = useState<Player[]>([]);
+  const user = useGetUser();
+
+  if (!user) return "Not logged in";
 
   const onFormSubmited = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,10 +42,11 @@ export const PlayersComponent = () => {
       goals,
       attendingMatches,
       id: uuidv4(),
-      teamId: "",
+      teamId: user.teamId,
     };
     const list = playerList.concat([newPlayer]);
     setPlayerList(list);
+    updateTeamWithPlayers(newPlayer, user.userId, user.teamId);
     setName("");
     setPosition(positionList[0]);
     setGoals(0);
@@ -96,7 +101,7 @@ export const PlayersComponent = () => {
       <div className="players">
         {playerList.map((item) => {
           return (
-            <div className="player-container">
+            <div key={item.id} className="player-container">
               <div className="player-header">
                 <h1>{item.name}</h1>
                 <button onClick={() => removePlayer(item.id)}>X</button>

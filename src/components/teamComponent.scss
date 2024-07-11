@@ -8,12 +8,15 @@
 }
 
 .teamPageContainer {
+
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 20px;
 
-
+    .teamContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         .team-container {
             padding: 8px;
             border-radius: 20px;
@@ -43,5 +46,5 @@
                 }
             }
         }
-    
+    }
 }
